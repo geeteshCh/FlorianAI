@@ -13,6 +13,53 @@ export default function Messages() {
     }
   }, [messages]);
 
+  const [messageLog, setMessageLog] = useState([]);
+
+  // console.log("Messages from Hume:", messages);
+  useEffect(() => {
+    // console.log("Testing useeffect");
+    if (messages.length > 0) {
+      setMessageLog((prevLog) => [...prevLog, ...messages.slice(prevLog.length)]);
+    }
+    // console.log("Total messages:", messageLog.length);
+    // console.log(messageLog[messageLog.length-1]);
+    // Once the messages length hits 10, send a POST request to the Python server
+    if (messageLog.length === 5) {
+      // Make sure your Python server is running at localhost:5000
+
+      const temp_data = "hello"
+      console.log("sending to llm server")
+      fetch("https://localhost:5000/messages", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(messageLog),
+      })
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("Response from Python server:", data);
+        })
+        .catch((error) => {
+          console.error("Error sending messages to server:", error);
+        });
+    }
+  }, [messages]);
+
+
+
+//   useEffect(() => {
+//   if (messages.length > 0) {
+//     const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(messages, null, 2));
+//     const downloadAnchorNode = document.createElement('a');
+//     downloadAnchorNode.setAttribute("href", dataStr);
+//     downloadAnchorNode.setAttribute("download", "messages.json");
+//     document.body.appendChild(downloadAnchorNode); // Required for Firefox
+//     downloadAnchorNode.click();
+//     downloadAnchorNode.remove();
+//   }
+// }, [messages]); 
+
   return (
     <div className="bg-white min-h-screen flex flex-col">
       <div className="w-[80vw] h-[80vh] flex flex-col bg-gradient-to-br from-white-50 to-white-100 rounded-lg overflow-hidden">
@@ -41,7 +88,7 @@ export default function Messages() {
   
                 {/* Message Content Box */}
                 <div className={`max-w-[70%] p-4 ${messageClass} shadow-lg rounded-lg`}>
-                  <p className="text-sm">{msg.message.content}</p>
+                  <p className="text-sm">Hola {msg.message.content}</p>
                 </div>
   
                 {/* Icon for User, comes after the message */}
