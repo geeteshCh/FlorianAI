@@ -9,6 +9,6 @@ export default async function Page() {
   if (!accessToken) {
     throw new Error();
   }
-  const configId = process.env.MAJOR_CONFIG_ID;
+  const configId = process.env.EMERGENCY_ASSISTANT_CONFIG;
   return <ClientComponent accessToken={accessToken} configId={configId}/>;
 }
