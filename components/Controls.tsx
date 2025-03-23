@@ -37,13 +37,12 @@ export default function Controls() {
   return (
     <div className="flex min-h-screen">
       {/* Left Sidebar */}
-      <div className="w-1/4 bg-gray-800 text-white p-6 flex flex-col justify-between">
+      <div className="w-1/4 text-white p-6 flex flex-col justify-between from-maroon to-dark-maroon bg-gradient-radial">
         {/* Top Section: Home Button */}
         <div className="mb-6 flex justify-center">
           <Link href="/">
             <button className="flex items-center space-x-3 text-lg font-bold px-4 py-2">
-              <FaHome className="text-3xl" />
-              <span>Home</span>
+                <img src="https://ems.tamu.edu/wp-content/uploads/2023/06/Cropped-all-white-horizontal-400x56.png" className="h-10" />
             </button>
           </Link>
         </div>
