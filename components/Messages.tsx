@@ -105,8 +105,8 @@ export default function Messages() {
   
             const isUserMessage = msg.type === "user_message";
             const messageClass = isUserMessage
-              ? "bg-gradient-to-r from-blue-500 to-blue-600 text-white rounded-lg self-end"
-              : "bg-gradient-to-r from-gray-100 to-gray-200 text-gray-800 rounded-lg self-start";
+              ? "bg-gradient-to-r from-rose-100 to-rose-200 text-gray-800 rounded-lg self-end border-2 border-rose-300"
+              : "bg-gradient-to-r from-blue-100 to-blue-200 text-gray-800 rounded-lg self-start border-2 border-blue-300";
             const icon = isUserMessage ? "👤" : "🤖";
   
             return (
