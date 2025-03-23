@@ -94,7 +94,7 @@ export default function Messages() {
 
   return (
     <div className="bg-white min-h-screen flex flex-col">
-      <div className="w-[80vw] h-[80vh] flex flex-col bg-gradient-to-br from-white-50 to-white-100 rounded-lg overflow-hidden">
+      <div className="w-[80vw] h-[100vh] flex flex-col bg-gradient-to-br from-white-50 to-white-100 rounded-lg overflow-hidden">
         {/* Message Panel */}
         <div
           ref={messagesRef}
