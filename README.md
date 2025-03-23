@@ -1,6 +1,6 @@
-# Presentation Pal
+# Florian AI
 
-Emotionally intelligent AI voice assistant to give real-time feedback on speech presentations, analyzing emotions, tone & volume.
+Florian AI is an emergancy responder and triage assistant designed to help elergency service operators and respondors by catagorizing the risk levels of different emergencies as well as assisting callers while they wait.
 
 ## Requirements
 
@@ -26,4 +26,4 @@ Server runs on port 3000.
 
 ## Demo
 
-https://github.com/user-attachments/assets/cc3d381c-b362-440c-9c8d-3531b6acfc16
+# Needs to be updated
