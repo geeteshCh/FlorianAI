@@ -118,7 +118,7 @@ export default function Messages() {
   
                 {/* Message Content Box */}
                 <div className={`max-w-[70%] p-4 ${messageClass} shadow-lg rounded-lg`}>
-                  <p className="text-sm">Hola {msg.message.content}</p>
+                  <p className="text-sm">{msg.message.content}</p>
                 </div>
   
                 {/* Icon for User, comes after the message */}
