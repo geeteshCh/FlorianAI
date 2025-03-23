@@ -2,10 +2,13 @@ from google import genai
 from google.genai import types
 import base64
 import os
+from dotenv import load_dotenv
 
-def generate_data(data, combined_list):
+load_dotenv()
+
+def generate():
   client = genai.Client(
-      api_key="AIzaSyCQaeRRWg7UTTRUbSRfwYZ6UP_W5klge7w"
+      api_key=os.getenv("GENAI_API_KEY"),
   )
 
 #   msg1_text1 = types.Part.from_text(text="""Monday, 2-20-2006 at 5-59 p.m. Emergency 911, where's the Pavel? My mom had
