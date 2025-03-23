@@ -49,16 +49,18 @@ export default function Messages() {
 
   useEffect(() => {
     if (messages.length > 0) {
-      setMessageLog((prevLog) => [
-        ...prevLog,
-        ...messages.slice(prevLog.length),
-      ]);
+      setMessageLog((prevLog) => [...prevLog,...messages.slice(prevLog.length)]);
     }
   }, [messages]);
+
+
+
+
+
   
   // Fetch when messageLog >= 5
   useEffect(() => {
-    if (messageLog.length >= 5) {
+    if (messageLog.length == 20) {
       console.log("sending to llm server");
       fetch("http://127.0.0.1:5000/messages", {
         method: "POST",

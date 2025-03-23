@@ -3,17 +3,18 @@ from google.genai import types
 import base64
 import os
 
-def generate():
+def generate_data(data, combined_list):
   client = genai.Client(
       api_key="AIzaSyCQaeRRWg7UTTRUbSRfwYZ6UP_W5klge7w"
   )
 
-  msg1_text1 = types.Part.from_text(text="""Monday, 2-20-2006 at 5-59 p.m. Emergency 911, where's the Pavel? My mom had
-Pavel. You're over there on Spruce. Huh? You're on Spruce.
-My mom. Where's Mr. Turner at? Right here. Let me speak to him. Let me speak to
-him. She's not going to talk. Okay, well I'm going to send the police to your
-house and find out what's going on with you.
-1-9-5-0 Spruce. Apartment 3.""")
+#   msg1_text1 = types.Part.from_text(text="""Monday, 2-20-2006 at 5-59 p.m. Emergency 911, where's the Pavel? My mom had
+# Pavel. You're over there on Spruce. Huh? You're on Spruce.
+# My mom. Where's Mr. Turner at? Right here. Let me speak to him. Let me speak to
+# him. She's not going to talk. Okay, well I'm going to send the police to your
+# house and find out what's going on with you.
+# 1-9-5-0 Spruce. Apartment 3.""")
+  msg1_text1 = types.Part.from_text(text=combined_list)
   si_text1 = """You are an expert emergency call analysis assistant. Your task is to analyze 911 call transcripts and extract critical information from the conversation. Focus on identifying potential life-threatening situations, possible false alarms, and any location details shared by the caller. Summarize the incident concisely.
 
 ⚠️ Important Safety Considerations:
@@ -54,11 +55,16 @@ Similarly, it is acceptable if a potential death is flagged but later turns out 
     system_instruction=[types.Part.from_text(text=si_text1)],
   )
 
+  # print(data)
+  llm_output = ""
   for chunk in client.models.generate_content_stream(
     model = model,
     contents = contents,
     config = generate_content_config,
     ):
-    print(chunk.text, end="")
+    llm_output += chunk.text
+  # print(llm_output)
+  return llm_output
+  
 
-generate()
+# generate("data")
