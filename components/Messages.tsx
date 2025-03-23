@@ -16,36 +16,66 @@ export default function Messages() {
   const [messageLog, setMessageLog] = useState([]);
 
   // console.log("Messages from Hume:", messages);
-  useEffect(() => {
-    // console.log("Testing useeffect");
-    if (messages.length > 0) {
-      setMessageLog((prevLog) => [...prevLog, ...messages.slice(prevLog.length)]);
-    }
-    // console.log("Total messages:", messageLog.length);
-    // console.log(messageLog[messageLog.length-1]);
-    // Once the messages length hits 10, send a POST request to the Python server
-    if (messageLog.length === 5) {
-      // Make sure your Python server is running at localhost:5000
+  // useEffect(() => {
+  //   // console.log("Testing useeffect");
+  //   if (messages.length > 0) {
+  //     setMessageLog((prevLog) => [...prevLog, ...messages.slice(prevLog.length)]);
+  //   }
+  //   // console.log("Total messages:", messageLog.length);
+  //   // console.log(messageLog[messageLog.length-1]);
+  //   // Once the messages length hits 10, send a POST request to the Python server
+  //   if (messageLog.length === 5) {
+  //     // Make sure your Python server is running at localhost:5000
 
-      const temp_data = "hello"
-      console.log("sending to llm server")
-      fetch("https://localhost:5000/messages", {
+  //     const temp_data = "hello"
+  //     console.log("sending to llm server")
+  //     fetch("https://localhost:5000/messages", {
+  //       method: "POST",
+  //       headers: {
+  //         "Content-Type": "application/json",
+  //       },
+  //       body: JSON.stringify(messageLog),
+  //     })
+  //       .then((response) => response.json())
+  //       .then((data) => {
+  //         console.log("Response from Python server:", data);
+  //       })
+  //       .catch((error) => {
+  //         console.error("Error sending messages to server:", error);
+  //       });
+  //   }
+  // }, [messages]);
+
+
+  useEffect(() => {
+    if (messages.length > 0) {
+      setMessageLog((prevLog) => [
+        ...prevLog,
+        ...messages.slice(prevLog.length),
+      ]);
+    }
+  }, [messages]);
+  
+  // Fetch when messageLog >= 5
+  useEffect(() => {
+    if (messageLog.length >= 5) {
+      console.log("sending to llm server");
+      fetch("http://127.0.0.1:5000/messages", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
         },
         body: JSON.stringify(messageLog),
       })
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("Response from Python server:", data);
+        // .then((response) => response.json())
+        .then((response) => {
+          console.log("Status:", response.status)
+          return response.json()
         })
-        .catch((error) => {
-          console.error("Error sending messages to server:", error);
-        });
+        .then((data) => console.log("Server response:", data))
+        .catch((error) => console.error("Error:", error));
     }
-  }, [messages]);
-
+  }, [messageLog]);
 
 
 //   useEffect(() => {
@@ -101,7 +131,9 @@ export default function Messages() {
             );
           })}
         </div>
-  
+        {/* <pre className="bg-gray-100 p-4 mt-2 text-xs overflow-x-auto">
+        {JSON.stringify(messageLog, null, 2)}
+      </pre>  */}
 
        {/* Custom Scrollbar Styles */}
        <style jsx>{`
