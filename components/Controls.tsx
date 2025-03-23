@@ -6,18 +6,44 @@ import Link from 'next/link';
 import Messages from "./Messages";
 import { motion, AnimatePresence } from 'framer-motion';
 
+  // We’ll use this key to force a new <Messages> instance:
+
+  
 export default function Controls() {
   const { connect, disconnect, readyState, lastUserMessage, lastVoiceMessage, isPlaying, isMuted} = useVoice();
+    const [messagesKey, setMessagesKey] = useState(0);
+    function toggleMic() {
+
+    if (readyState === VoiceReadyState.OPEN) {
+
+      // Microphone currently on, so turn it off
+
+      disconnect();
+
+      // Force-remount <Messages> so it resets
+
+      setMessagesKey(prev => prev + 1);
+
+    } else {
+
+      // Mic is currently off, so turn it on
+
+      connect().catch(() => {});
+
+    }
+
+  }
 
   return (
     <div className="flex min-h-screen">
       {/* Left Sidebar */}
-      <div className="w-1/4 text-white p-6 flex flex-col justify-between from-maroon to-dark-maroon bg-gradient-radial">
+      <div className="w-1/4 bg-gray-800 text-white p-6 flex flex-col justify-between">
         {/* Top Section: Home Button */}
         <div className="mb-6 flex justify-center">
           <Link href="/">
             <button className="flex items-center space-x-3 text-lg font-bold px-4 py-2">
-              <img src="https://ems.tamu.edu/wp-content/uploads/2023/06/Cropped-all-white-horizontal-400x56.png" className="h-10" />
+              <FaHome className="text-3xl" />
+              <span>Home</span>
             </button>
           </Link>
         </div>
@@ -42,15 +68,7 @@ export default function Controls() {
           <div className="flex justify-center items-center space-x-4">
             <motion.button
               className="p-4 rounded-full bg-white shadow-lg hover:shadow-xl transition-shadow"
-              onClick={() => {
-                if (readyState === VoiceReadyState.OPEN) {
-                  disconnect();
-                } else {
-                  connect()
-                    .then(() => {})
-                    .catch(() => {});
-                }
-              }}
+              onClick={toggleMic}
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
             >
@@ -90,7 +108,7 @@ export default function Controls() {
       </div>
           
       {/* Messages Section */}
-      <Messages />
+      <Messages key={messagesKey} />
     </div>
   );
 }
